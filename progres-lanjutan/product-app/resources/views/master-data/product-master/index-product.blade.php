@@ -7,8 +7,19 @@
   
     <div class="container p-4 mx-auto">
       <div class="overflow-x-auto">
+
+        @if (session('success'))
+          <div class="p-4 mb-4 text-green-600 bg-green-200">
+            {{ session('success') }}
+          </div>
+        @elseif (session('error'))
+          <div class="p-4 mb-4 text-red-600 bg-red-200">
+            {{ session('error') }}
+          </div>
+        @endif
+
         <a href="{{ route('product-create')}}">
-            <button class="px-4 py-2 text-white bg-green-500 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-500 border border-gray-200">
+            <button class="px-4 py-2 text-green-600 bg-green-200 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-500 border border-gray-200">
                 Add Product
             </button>
         </a>
@@ -38,22 +49,20 @@
                   <td class="px-4 py-2 border border-gray-200">{{ $item->quantities }}</td>
                   <td class="px-4 py-2 border border-gray-200">{{ $item->producers }}</td>
                   <td class="px-4 py-2 border border-gray-200">
-                    <a href="{{ route('product-edit', $item->id) }}" class="px-2 text-blue-600 hover:text-blue-800">| Edit |</a>
-                    <button class="px-2 text-red-600 hover:text-red-800" onclick="confirmDelete(1)">| Hapus |</button>
+                    <a href="{{ route('product-edit', $item->id) }}" class="px-2 text-green-600 bg-green-200 hover:text-blue-800">| Edit |</a>
+                    <button class="px-2 text-red-600 hover:text-red-800" onclick="confirmDelete('{{ route('product-delete', $item->id) }}')">| Hapus |</button>
                   </td>
                 </tr>
               @endforeach
-    
-    
+        
               <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
           </table>
         </div>
       </div>
-    
-    
+        
       <script>
-        function confirmDelete(id, deleteUrl) {
+        function confirmDelete(deleteUrl) {
                 if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
                     // Jika user mengonfirmasi, kita dapat membuat form dan mengirimkan permintaan delete
                     let form = document.createElement('form');
@@ -80,9 +89,6 @@
                 }
             }
       </script>
-    
-    
-    
-    
+
     </x-app-layout>
     
