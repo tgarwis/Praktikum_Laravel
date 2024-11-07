@@ -19,6 +19,9 @@
                                 Product name
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Gambar
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Unit
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -38,6 +41,13 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $product->product_name }}
                                 </th>
+                                <td scope="col">
+                                    @if ($product->image)
+                                            <img src="{{ asset('images/products/' . $product->image) }}" alt="Product Image" width="100">
+                                        @else
+                                            <img src="{{ asset('images/default.png') }}" alt="Default Image" width="100">
+                                        @endif
+                                    </td>
                                 <td class="px-6 py-4">
                                     {{ $product->unit }}
                                 </td>

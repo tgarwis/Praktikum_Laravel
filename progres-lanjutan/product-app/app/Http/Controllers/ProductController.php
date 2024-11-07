@@ -12,9 +12,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('master-data.product-master.product-list', [
-            'products' => Product::latest()->get()
-        ]);
+
+        $data = Product::all();
+        return view("master-data.product-master.index-product", compact('data'));
+
+        // Product-List
+
+        // return view('master-data.product-master.product-list', [
+        //     'products' => Product::latest()->get()
+        // ]);
     }
 
     /**
@@ -30,29 +36,41 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //Validasi input data
-        $validasi_data = $request->validate([
+        // Validate input data
+        $validatedData = $request->validate([
             'product_name' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'unit' => 'required|string|max:50',
             'types' => 'required|string|max:50',
             'information' => 'nullable|string',
             'quantities' => 'required|integer',
             'producers' => 'required|string|max:255',
         ]);
-        
-        //Simpan data ke database
-        Product::create($validasi_data);
 
+        if ($request->hasFile('image')) {
+            
+            // Generate a unique file name
+            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
+            // Move the uploaded file to the public/images directory
+            $request->file('image')->move(public_path('images/products'), $fileName);
+            // Add the image file name to validated data
+            $validatedData['image'] = $fileName; 
+        }
+        
         // dd($request->all());
 
-        return redirect()->back()->with('success', 'Data product berhasil disimpan');
+        // Create the product with the validated data
+        Product::create($validatedData);
+        
+        // Redirect to the product list with a success message
+        return redirect()->back()->with('success', 'Product created successfully.');
 
         // try {
-        //     Product::create($validasi_data);
-        //     return redirect()->back()->with('success', 'Data product berhasil disimpan');
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data product. Silahkan coba lagi.');
-        // }
+            //     Product::create($validasi_data);
+            //     return redirect()->back()->with('success', 'Data product berhasil disimpan');
+            // } catch (\Exception $e) {
+            //     return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data product. Silahkan coba lagi.');
+            // }
     }
 
     /**
@@ -60,7 +78,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('master-data.product-master.show-product', compact('product'));
     }
 
     /**
@@ -68,7 +87,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('master-data.product-master.edit-product', compact('product'));
     }
 
     /**
@@ -76,7 +96,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'unit' => 'required|string|max:50',
+            'types' => 'required|string|max:50',
+            'information' => 'nullable|string',
+            'quantities' => 'required|integer',
+            'producers' => 'required|string|max:255',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->update([
+            'product_name' => $request->product_name,
+            // 'image' => $request->image,
+            'unit' => $request->unit,
+            'types' => $request->types,
+            'information' => $request->information,
+            'quantities' => $request->quantities,
+            'producers' => $request->producers
+        ]);
+
+        return redirect()->back()->with('success', 'Product update successfully!');
+
     }
 
     /**
@@ -84,6 +126,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Implement destroy logic here
     }
 }

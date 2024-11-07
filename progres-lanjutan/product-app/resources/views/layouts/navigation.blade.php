@@ -41,13 +41,18 @@
                 Create Product
             </x-dropdown-link>
 
+            <x-dropdown-link :href="route('product-index')">
+                Index Product
+            </x-dropdown-link>
+
+
             <x-dropdown-link :href="route('supplier-create')">
                 Create Supplier
             </x-dropdown-link>
 
-            <x-dropdown-link :href="route('product-list')">
+            {{-- <x-dropdown-link :href="route('product-list')">
                 Product List
-            </x-dropdown-link>
+            </x-dropdown-link> --}}
 
             <x-dropdown-link :href="route('supplier-list')">
                 Supplier List
