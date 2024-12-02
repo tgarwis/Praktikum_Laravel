@@ -18,6 +18,12 @@
           </div>
         @endif
 
+        <form method="GET" action="{{ route('product-index') }}" class="mb-4 flex items-center">
+          <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="w-1/4 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+          <button type="submit" class="ml-2 rounded-lg bg-green-500 px-4 py-2 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Cari</button>
+        </form>
+          
+
         <a href="{{ route('product-create')}}">
             <button class="px-4 py-2 text-green-600 bg-green-200 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-500 border border-gray-200">
                 Add Product
@@ -45,7 +51,7 @@
             </thead>
             <tbody>
              
-              @foreach ($data as $item)
+              @forelse ($products as $item)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <td class="px-4 py-2 border border-gray-200">{{ $loop->iteration }}
                   <td class="px-4 py-2 border border-gray-200 hoover:text-blue-500 hoover:underline">
@@ -63,7 +69,11 @@
                     <button class="px-2 text-red-600 hover:text-red-800" onclick="confirmDelete('{{ route('product-delete', $item->id) }}')">| Hapus |</button>
                   </td>
                 </tr>
-              @endforeach
+
+              @empty
+                <p class="mb-4 text-center text-2xl font-bold text-red-600">No Product Found</p>
+
+              @endforelse
         
               <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
@@ -71,7 +81,8 @@
 
           {{-- Pagination --}}
           <div class="mt-4">
-            {{ $data->links() }}
+            {{-- {{ $products->links() }} --}}
+            {{ $products->appends(['search' => request('search')])->links() }}
           </div>
 
         </div>
