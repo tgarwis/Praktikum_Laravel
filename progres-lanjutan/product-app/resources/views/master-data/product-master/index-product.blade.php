@@ -24,6 +24,12 @@
             </button>
         </a>
 
+        <a href="{{ route('product-export-excel')}}">
+          <button class="px-4 py-2 text-green-600 bg-green-200 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-500 border border-gray-200">
+              Export Product
+          </button>
+        </a>
+
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-4">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr class="bg-gray-100">
