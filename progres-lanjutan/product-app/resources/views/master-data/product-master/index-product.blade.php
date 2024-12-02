@@ -68,6 +68,12 @@
               <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
           </table>
+
+          {{-- Pagination --}}
+          <div class="mt-4">
+            {{ $data->links() }}
+          </div>
+
         </div>
       </div>
         
