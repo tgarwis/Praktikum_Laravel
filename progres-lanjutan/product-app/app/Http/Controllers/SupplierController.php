@@ -22,7 +22,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('master-data.product-master.create-supplier');
+        $suppliers = Supplier::all();
+        return view('master-data.product-master.create-product', compact('suppliers'));
     }
 
     /**
@@ -66,7 +67,8 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $suppliers = Supplier::all();
+        return view('master-data.product-master.edit-product', compact('suppliers'));
     }
 
     /**
