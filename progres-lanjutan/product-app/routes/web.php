@@ -28,11 +28,11 @@ require __DIR__.'/auth.php';
 Route::get('/product', [ProductController::class, 'index'])->name('product-index');
 Route::get('/product/create', [ProductController::class, 'create'])->name("product-create")->middleware('auth', 'RoleCheck:admin');
 Route::post('/product', [ProductController::class,'store'])->name("product-store")->middleware('auth', 'RoleCheck:admin');
-Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product-detail')->middleware('auth', 'RoleCheck:admin');
 Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('product-edit')->middleware('auth', 'RoleCheck:admin');
 Route::put('/product/{id}', [ProductController::class, 'update'])->name('product-update')->middleware('auth', 'RoleCheck:admin');
 Route::delete('/product/{id}',[ProductController::class,'destroy'])->name('product-delete')->middleware('auth', 'RoleCheck:admin');
-Route::get('/product/export/excel',[ProductController::class, 'exportExcel'])->name('product-export-excel')->middleware('auth', 'RoleCheck:admin');
+Route::get('/product/export/excel',[ProductController::class, 'exportExcel'])->name('product-export')->middleware('auth', 'RoleCheck:admin');
 
 Route::get('route_cont/{id}', [BarangController::class, 'index']);
 

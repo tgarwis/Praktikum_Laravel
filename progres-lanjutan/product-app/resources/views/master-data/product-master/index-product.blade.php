@@ -24,7 +24,7 @@
             </button>
         </a>
 
-        <a href="{{ route('product-export-excel')}}">
+        <a href="{{ route('product-export')}}">
           <button class="px-4 py-2 text-green-600 bg-green-200 rounded hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-500 border border-gray-200">
               Export Product
           </button>
@@ -48,7 +48,11 @@
               @foreach ($data as $item)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <td class="px-4 py-2 border border-gray-200">{{ $loop->iteration }}
-                  <td class="px-4 py-2 border border-gray-200">{{ $item->product_name }}</td>
+                  <td class="px-4 py-2 border border-gray-200 hoover:text-blue-500 hoover:underline">
+                    <a href="{{ route('product-detail', $item->id) }}">
+                      {{ $item->product_name }}
+                    </a>
+                  </td>
                   <td class="px-4 py-2 border border-gray-200">{{ $item->unit }}</td>
                   <td class="px-4 py-2 border border-gray-200">{{ $item->types }}</td>
                   <td class="px-4 py-2 border border-gray-200">{{ $item->information }}</td>
